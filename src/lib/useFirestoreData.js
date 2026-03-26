@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { db } from "./firebase";
 import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
+import { auth } from "./firebase";
 
 export function useFirestoreData(userId) {
   const [data, setData] = useState(null);
