@@ -1,27 +1,18 @@
-// ============================================
-// FIREBASE AYARLARI
-// ============================================
-// 1. https://console.firebase.google.com adresine gidin
-// 2. "Add Project" ile yeni proje oluşturun (isim: nakapp)
-// 3. Authentication > Sign-in method > Email/Password'ı aktif edin
-// 4. Firestore Database > Create database > Start in test mode
-// 5. Project Settings > General > Your apps > Web app ekleyin
-// 6. Aşağıdaki değerleri Firebase'den aldığınız değerlerle doldurun
-// ============================================
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "BURAYA_FIREBASE_API_KEY",
-  authDomain: "BURAYA_PROJE_ADI.firebaseapp.com",
-  projectId: "BURAYA_PROJE_ADI",
-  storageBucket: "BURAYA_PROJE_ADI.appspot.com",
-  messagingSenderId: "BURAYA_SENDER_ID",
-  appId: "BURAYA_APP_ID"
+  apiKey: "AIzaSyCGmMDFEvQSXxQ5khNmFpyFxO1WEcHqMQ",
+  authDomain: "nakapp-f7b34.firebaseapp.com",
+  projectId: "nakapp-f7b34",
+  storageBucket: "nakapp-f7b34.firebasestorage.app",
+  messagingSenderId: "971385492657",
+  appId: "1:971385492657:web:c7faa497f212e8add9be90",
+  measurementId: "G-8DN445XR5V"
 };
 
 const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
 export const db = getFirestore(app);
