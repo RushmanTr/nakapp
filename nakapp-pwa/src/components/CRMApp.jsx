@@ -63,28 +63,45 @@ const Modal = ({ open, onClose, title, children, width = 520 }) => {
   if (!open) return null;
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.35)", backdropFilter: "blur(2px)" }} onClick={onClose}>
-      <div onClick={e => e.stopPropagation()} style={{ background: "#fff", borderRadius: 16, width: "min(90vw," + width + "px)", maxHeight: "85vh", overflow: "auto", border: "0.5px solid var(--color-border-tertiary)" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 20px", borderBottom: "0.5px solid var(--color-border-tertiary)", background: "#fff" }}>
+      <div onClick={e => e.stopPropagation()} style={{ background: "#2A2A2A", borderRadius: 16, width: "min(90vw," + width + "px)", maxHeight: "85vh", overflow: "auto", border: "0.5px solid #3A3A3A" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 20px", borderBottom: "0.5px solid #3A3A3A", background: "#2A2A2A" }}>
           <span style={{ fontWeight: 500, fontSize: 16 }}>{title}</span>
-          <button onClick={onClose} style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer", color: "var(--color-text-secondary)", lineHeight: 1 }}>×</button>
+          <button onClick={onClose} style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer", color: "#888", lineHeight: 1 }}>×</button>
         </div>
-        <div style={{ padding: "16px 20px", background: "#fff" }}>{children}</div>
+        <div style={{ padding: "16px 20px", background: "#2A2A2A" }}>{children}</div>
       </div>
     </div>
   );
 };
-const Field = ({ label, children }) => (<div style={{ marginBottom: 14 }}><label style={{ display: "block", fontSize: 12, color: "var(--color-text-secondary)", marginBottom: 4, fontWeight: 500 }}>{label}</label>{children}</div>);
-const inputStyle = { width: "100%", padding: "8px 12px", fontSize: 14, borderRadius: 8, border: "0.5px solid var(--color-border-secondary)", background: "#fff", color: "#222", boxSizing: "border-box" };
+const Field = ({ label, children }) => (<div style={{ marginBottom: 14 }}><label style={{ display: "block", fontSize: 12, color: "#888", marginBottom: 4, fontWeight: 500 }}>{label}</label>{children}</div>);
+const inputStyle = { width: "100%", padding: "8px 12px", fontSize: 14, borderRadius: 8, border: "0.5px solid #444", background: "#2A2A2A", color: "#E8E6DF", boxSizing: "border-box" };
+
+const NavIcon = ({ name, color }) => {
+  const s = { width: 16, height: 16, fill: "none", stroke: color, strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" };
+  const icons = {
+    dashboard: <svg viewBox="0 0 24 24" {...s}><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>,
+    customers: <svg viewBox="0 0 24 24" {...s}><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 014-4h6a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg>,
+    orders: <svg viewBox="0 0 24 24" {...s}><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>,
+    collections: <svg viewBox="0 0 24 24" {...s}><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>,
+    completed: <svg viewBox="0 0 24 24" {...s}><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>,
+    drive: <svg viewBox="0 0 24 24" {...s}><path d="M4 20h16a2 2 0 002-2V8a2 2 0 00-2-2h-7.93L10 4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>,
+    reminders: <svg viewBox="0 0 24 24" {...s}><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>,
+    import: <svg viewBox="0 0 24 24" {...s}><circle cx="12" cy="12" r="3"/><path d="M12 2a7 7 0 017 7c0 2-1 3.5-2 5s-1 3.5-1 5h-8c0-1.5 0-3.5-1-5s-2-3-2-5a7 7 0 017-7z"/><path d="M9 19h6"/></svg>,
+    calculator: <svg viewBox="0 0 24 24" {...s}><rect x="4" y="2" width="16" height="20" rx="2"/><rect x="8" y="6" width="8" height="4" rx="1"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/></svg>
+  };
+  return icons[name] || null;
+};
 
 const navItems = [
-  { key: "dashboard", icon: "G", label: "Genel" },
-  { key: "customers", icon: "M", label: "Müşteriler" },
-  { key: "orders", icon: "S", label: "Siparişler" },
-  { key: "collections", icon: "T", label: "Tahsilat" },
-  { key: "completed", icon: "OK", label: "Tamamlananlar" },
-  { key: "drive", icon: "D", label: "Drive" },
-  { key: "reminders", icon: "H", label: "Hatırlatmalar" },
-  { key: "import", icon: "I", label: "İçe Aktar AI" }
+  { key: "dashboard", label: "Genel" },
+  { key: "customers", label: "Müşteriler" },
+  { key: "orders", label: "Siparişler" },
+  { key: "collections", label: "Tahsilat" },
+  { key: "completed", label: "Tamamlananlar" },
+  { key: "drive", label: "Drive" },
+  { key: "reminders", label: "Hatırlatmalar" },
+  { key: "import", label: "İçe Aktar AI" },
+  { key: "calculator", label: "Fiyat Hesapla" }
 ];
 
 export default function CRMApp() {
@@ -110,35 +127,50 @@ export default function CRMApp() {
   const [expandedOrderCustomer, setExpandedOrderCustomer] = useState(null);
   const [groupStatusDropdown, setGroupStatusDropdown] = useState(null);
   const [aiImport, setAiImport] = useState({ step: "idle", loading: false, fileName: "", preview: null, editPreview: null, error: null });
-  const [marketData, setMarketData] = useState({ usd: 44.35, eur: 51.55, gold: 6305, loading: false, error: null, lastUpdate: "10:00" });
+  const [marketData, setMarketData] = useState({ usd: 0, eur: 0, gold: 0, loading: true, error: null, lastUpdate: "—" });
   const [marketInitialized, setMarketInitialized] = useState(false);
 
   const fetchMarketData = useCallback(async (silent = false) => {
     if (!silent) setMarketData(prev => ({ ...prev, loading: true }));
+    let usd = 0, eur = 0, gold = 0;
+
+    // Try multiple exchange rate APIs
+    const apis = [
+      "https://open.er-api.com/v6/latest/USD",
+      "https://api.exchangerate-api.com/v4/latest/USD",
+      "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json"
+    ];
+
+    for (const url of apis) {
+      if (usd > 0) break;
+      try {
+        const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+        if (!res.ok) continue;
+        const json = await res.json();
+        if (json.rates && json.rates.TRY) {
+          usd = json.rates.TRY;
+          const eurRate = json.rates.EUR;
+          if (eurRate > 0) eur = usd / eurRate;
+        } else if (json.usd && json.usd.try) {
+          usd = json.usd.try;
+          if (json.usd.eur > 0) eur = usd / json.usd.eur;
+        }
+      } catch {}
+    }
+
+    // Gold price
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 300,
-          system: "Sen bir finans veri asistanısın. SADECE JSON döndür, başka metin yazma.",
-          tools: [{ type: "web_search_20250305", name: "web_search" }],
-          messages: [{ role: "user", content: "Güncel USD/TRY, EUR/TRY ve gram altın TL fiyatını bul. SADECE JSON döndür: {\"usd\":44.35,\"eur\":51.55,\"gold\":6300}" }]
-        })
-      });
-      if (!res.ok) throw new Error("err");
-      const json = await res.json();
-      let allText = "";
-      if (json.content) for (const b of json.content) if (b.type === "text") allText += " " + b.text;
-      const m = allText.replace(/```json|```/g, "").match(/\{[^{}]*"usd"\s*:\s*[\d.]+[^{}]*\}/i);
-      if (m) {
-        const p = JSON.parse(m[0]);
-        if (p.usd > 0) { setMarketData({ usd: p.usd, eur: p.eur, gold: p.gold, loading: false, error: null, lastUpdate: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }) }); return; }
+      const goldRes = await fetch("https://data-asg.goldprice.org/dbXRates/TRY", { signal: AbortSignal.timeout(8000) });
+      if (goldRes.ok) {
+        const gj = await goldRes.json();
+        if (gj.items && gj.items[0]) gold = Math.round(gj.items[0].xauPrice / 31.1035);
       }
-      setMarketData(prev => ({ ...prev, loading: false }));
-    } catch {
-      setMarketData(prev => ({ ...prev, loading: false }));
+    } catch {}
+
+    if (usd > 0) {
+      setMarketData({ usd, eur, gold, loading: false, error: null, lastUpdate: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }) });
+    } else {
+      setMarketData(prev => ({ ...prev, loading: false, error: "Piyasa verisi alınamadı — tekrar deneyin" }));
     }
   }, []);
 
@@ -233,25 +265,25 @@ export default function CRMApp() {
       <div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
           <h2 style={{ fontSize: 22, fontWeight: 500, margin: 0 }}>Genel</h2>
-          <span style={{ fontSize: 13, color: "var(--color-text-secondary)" }}>{new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" })}</span>
+          <span style={{ fontSize: 13, color: "#888" }}>{new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" })}</span>
         </div>
 
         {/* Market Data */}
-        <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 12, padding: "14px 18px", marginBottom: 20 }}>
+        <div style={{ background: "#242424", border: "0.5px solid #3A3A3A", borderRadius: 12, padding: "14px 18px", marginBottom: 20 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-            <div style={{ fontSize: 13, fontWeight: 500, color: "var(--color-text-secondary)" }}>Piyasa verileri</div>
+            <div style={{ fontSize: 13, fontWeight: 500, color: "#888" }}>Piyasa verileri</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              {marketData.lastUpdate && <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>{marketData.lastUpdate}</span>}
-              <button onClick={() => fetchMarketData(false)} style={{ background: "var(--color-background-secondary)", border: "none", borderRadius: 6, padding: "3px 8px", fontSize: 11, cursor: "pointer", color: "var(--color-text-secondary)" }}>↻</button>
+              {marketData.lastUpdate && <span style={{ fontSize: 11, color: "#888" }}>{marketData.lastUpdate}</span>}
+              <button onClick={() => fetchMarketData(false)} style={{ background: "#2E2E2E", border: "none", borderRadius: 6, padding: "3px 8px", fontSize: 11, cursor: "pointer", color: "#888" }}>↻</button>
             </div>
           </div>
           {marketData.loading ? (
             <div style={{ display: "flex", gap: 12 }}>
-              {[1,2,3,4].map(i => (<div key={i} style={{ flex: 1, background: "var(--color-background-secondary)", borderRadius: 10, padding: "14px 16px", height: 60 }}><div style={{ width: "60%", height: 10, background: "var(--color-border-tertiary)", borderRadius: 4, marginBottom: 8 }} /><div style={{ width: "40%", height: 16, background: "var(--color-border-tertiary)", borderRadius: 4 }} /></div>))}
+              {[1,2,3,4].map(i => (<div key={i} style={{ flex: 1, background: "#2E2E2E", borderRadius: 10, padding: "14px 16px", height: 60 }}><div style={{ width: "60%", height: 10, background: "var(--color-border-tertiary)", borderRadius: 4, marginBottom: 8 }} /><div style={{ width: "40%", height: 16, background: "var(--color-border-tertiary)", borderRadius: 4 }} /></div>))}
             </div>
           ) : marketData.error ? (
             <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0" }}>
-              <span style={{ fontSize: 13, color: "var(--color-text-secondary)" }}>{marketData.error}</span>
+              <span style={{ fontSize: 13, color: "#888" }}>{marketData.error}</span>
               <button onClick={() => fetchMarketData(false)} style={{ background: "#E6F1FB", border: "1px solid #85B7EB", borderRadius: 8, padding: "4px 12px", fontSize: 12, cursor: "pointer", color: "#185FA5", fontWeight: 500 }}>Tekrar dene</button>
             </div>
           ) : (
@@ -282,8 +314,8 @@ export default function CRMApp() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 28 }}>
           {[{ label: "Toplam sipariş", value: data.orders.length, accent: "#534AB7" }, { label: "Ort. kar marjı", value: avgMargin.toFixed(1) + "%", accent: "#D85A30" }, { label: "Bekleyen tahsilat", value: fmtCurrency(pendingAmount), accent: "#A32D2D" }].map((m, i) => (
-            <div key={i} style={{ background: "var(--color-background-secondary)", borderRadius: 10, padding: "14px 16px" }}>
-              <div style={{ fontSize: 12, color: "var(--color-text-secondary)", marginBottom: 4, fontWeight: 500 }}>{m.label}</div>
+            <div key={i} style={{ background: "#2E2E2E", borderRadius: 10, padding: "14px 16px" }}>
+              <div style={{ fontSize: 12, color: "#888", marginBottom: 4, fontWeight: 500 }}>{m.label}</div>
               <div style={{ fontSize: 22, fontWeight: 500, color: m.accent }}>{m.value}</div>
             </div>
           ))}
@@ -312,9 +344,9 @@ export default function CRMApp() {
         <div style={{ fontWeight: 500, fontSize: 16, marginBottom: 12 }}>En iyi müşteriler</div>
         <div style={{ display: "grid", gap: 10 }}>
           {data.customers.filter(c => customerStats[c.id]?.totalRevenue > 0).sort((a, b) => customerStats[b.id].totalRevenue - customerStats[a.id].totalRevenue).slice(0, 5).map((c, i) => { const s = customerStats[c.id]; return (
-            <div key={c.id} style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 10, padding: "12px 16px" }}>
+            <div key={c.id} style={{ display: "flex", alignItems: "center", gap: 12, background: "#242424", border: "0.5px solid #3A3A3A", borderRadius: 10, padding: "12px 16px" }}>
               <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#EEEDFE", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 500, fontSize: 13, color: "#534AB7", flexShrink: 0 }}>{i + 1}</div>
-              <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontWeight: 500, fontSize: 14 }}>{c.name}</div><div style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>{c.country} — {c.sector}</div></div>
+              <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontWeight: 500, fontSize: 14 }}>{c.name}</div><div style={{ fontSize: 12, color: "#888" }}>{c.country} — {c.sector}</div></div>
               <div style={{ textAlign: "right", flexShrink: 0 }}><div style={{ fontWeight: 500, fontSize: 14 }}>{fmtCurrency(s.totalRevenue)}</div><div style={{ fontSize: 12, color: s.margin > 25 ? "#3B6D11" : "#D85A30" }}>%{s.margin.toFixed(1)} kar</div></div>
             </div>); })}
         </div>
@@ -367,14 +399,14 @@ export default function CRMApp() {
             {selectedCustomers.size === filteredCustomers.length && filteredCustomers.length > 0 && <span style={{ color: "#534AB7", fontSize: 12, fontWeight: 700, lineHeight: 1 }}>✓</span>}
             {selectedCustomers.size > 0 && selectedCustomers.size < filteredCustomers.length && <span style={{ color: "#534AB7", fontSize: 12, fontWeight: 700, lineHeight: 1 }}>—</span>}
           </div>
-          <span style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>
+          <span style={{ fontSize: 12, color: "#888" }}>
             {selectedCustomers.size > 0 ? `${selectedCustomers.size} / ${filteredCustomers.length} seçili` : "Tümünü seç"}
           </span>
         </div>
       )}
       <div style={{ display: "grid", gap: 6 }}>
         {filteredCustomers.map(c => { const s = customerStats[c.id]; const isOpen = expandedCustomer === c.id; const isSelected = selectedCustomers.has(c.id); return (
-          <div key={c.id} style={{ background: "var(--color-background-primary)", border: isSelected ? "1px solid #AFA9EC" : isOpen ? "1px solid var(--color-border-primary)" : "0.5px solid var(--color-border-tertiary)", borderRadius: 10, overflow: "hidden" }}>
+          <div key={c.id} style={{ background: "#242424", border: isSelected ? "1px solid #AFA9EC" : isOpen ? "1px solid var(--color-border-primary)" : "0.5px solid var(--color-border-tertiary)", borderRadius: 10, overflow: "hidden" }}>
             <div style={{ display: "flex", alignItems: "center", padding: "10px 16px", cursor: "pointer", gap: 12, userSelect: "none" }}>
               <div onClick={(e) => toggleSelectCustomer(c.id, e)} style={{
                 width: 18, height: 18, borderRadius: 3, border: `2px solid ${isSelected ? "#534AB7" : "#B4B2A9"}`,
@@ -383,46 +415,46 @@ export default function CRMApp() {
               }}>
                 {isSelected && <span style={{ color: "#534AB7", fontSize: 12, fontWeight: 700, lineHeight: 1 }}>✓</span>}
               </div>
-              <span onClick={() => setExpandedCustomer(isOpen ? null : c.id)} style={{ fontSize: 11, transition: "transform 0.2s", transform: isOpen ? "rotate(90deg)" : "rotate(0deg)", color: "var(--color-text-secondary)", flexShrink: 0, width: 14, textAlign: "center" }}>&#9654;</span>
+              <span onClick={() => setExpandedCustomer(isOpen ? null : c.id)} style={{ fontSize: 11, transition: "transform 0.2s", transform: isOpen ? "rotate(90deg)" : "rotate(0deg)", color: "#888", flexShrink: 0, width: 14, textAlign: "center" }}>&#9654;</span>
               <div onClick={() => setExpandedCustomer(isOpen ? null : c.id)} style={{ width: 30, height: 30, borderRadius: "50%", flexShrink: 0, background: STATUS_MAP[c.status].bg, border: `1px solid ${STATUS_MAP[c.status].border}`, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 500, fontSize: 11, color: STATUS_MAP[c.status].color }}>{c.name.slice(0, 2).toUpperCase()}</div>
               <div onClick={() => setExpandedCustomer(isOpen ? null : c.id)} style={{ flex: 1, minWidth: 0 }}><span style={{ fontWeight: 500, fontSize: 14 }}>{c.name}</span></div>
-              <span style={{ fontSize: 12, color: "var(--color-text-secondary)", flexShrink: 0 }}>{c.country}</span>
+              <span style={{ fontSize: 12, color: "#888", flexShrink: 0 }}>{c.country}</span>
               <StatusBadge status={c.status} />
               {s?.isOverdue && c.status === "active" && <span style={{ fontSize: 10, fontWeight: 500, padding: "2px 8px", borderRadius: 20, background: "#FAEEDA", color: "#854F0B", flexShrink: 0 }}>!</span>}
-              {s && s.orders.length > 0 && <span style={{ fontSize: 12, color: "var(--color-text-secondary)", flexShrink: 0 }}>{s.orders.length} sipariş</span>}
+              {s && s.orders.length > 0 && <span style={{ fontSize: 12, color: "#888", flexShrink: 0 }}>{s.orders.length} sipariş</span>}
             </div>
             {isOpen && (
-              <div style={{ padding: "0 16px 14px 52px", borderTop: "0.5px solid var(--color-border-tertiary)" }}>
-                <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginTop: 12, fontSize: 13, color: "var(--color-text-secondary)" }}><span>{c.sector}</span>{c.phone && <span>{c.phone}</span>}{c.email && <span>{c.email}</span>}</div>
-                {c.notes && <div style={{ fontSize: 13, color: "var(--color-text-secondary)", marginTop: 6, fontStyle: "italic" }}>{c.notes}</div>}
+              <div style={{ padding: "0 16px 14px 52px", borderTop: "0.5px solid #3A3A3A" }}>
+                <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginTop: 12, fontSize: 13, color: "#888" }}><span>{c.sector}</span>{c.phone && <span>{c.phone}</span>}{c.email && <span>{c.email}</span>}</div>
+                {c.notes && <div style={{ fontSize: 13, color: "#888", marginTop: 6, fontStyle: "italic" }}>{c.notes}</div>}
                 {s && s.orders.length > 0 && (
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 8, marginTop: 12 }}>
-                    <div style={{ background: "var(--color-background-secondary)", borderRadius: 8, padding: "8px 12px" }}><div style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Toplam ciro</div><div style={{ fontWeight: 500, fontSize: 15 }}>{fmtCurrency(s.totalRevenue)}</div></div>
-                    <div style={{ background: "var(--color-background-secondary)", borderRadius: 8, padding: "8px 12px" }}><div style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Kar marjı</div><div style={{ fontWeight: 500, fontSize: 15, color: s.margin > 25 ? "#3B6D11" : "#D85A30" }}>%{s.margin.toFixed(1)}</div></div>
-                    {s.avgDays && <div style={{ background: "var(--color-background-secondary)", borderRadius: 8, padding: "8px 12px" }}><div style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Ort. sipariş aralığı</div><div style={{ fontWeight: 500, fontSize: 15 }}>{s.avgDays} gün</div></div>}
+                    <div style={{ background: "#2E2E2E", borderRadius: 8, padding: "8px 12px" }}><div style={{ fontSize: 11, color: "#888" }}>Toplam ciro</div><div style={{ fontWeight: 500, fontSize: 15 }}>{fmtCurrency(s.totalRevenue)}</div></div>
+                    <div style={{ background: "#2E2E2E", borderRadius: 8, padding: "8px 12px" }}><div style={{ fontSize: 11, color: "#888" }}>Kar marjı</div><div style={{ fontWeight: 500, fontSize: 15, color: s.margin > 25 ? "#3B6D11" : "#D85A30" }}>%{s.margin.toFixed(1)}</div></div>
+                    {s.avgDays && <div style={{ background: "#2E2E2E", borderRadius: 8, padding: "8px 12px" }}><div style={{ fontSize: 11, color: "#888" }}>Ort. sipariş aralığı</div><div style={{ fontWeight: 500, fontSize: 15 }}>{s.avgDays} gün</div></div>}
                     {s.nextExpected && <div style={{ background: s.isOverdue ? "#FAEEDA" : "var(--color-background-secondary)", borderRadius: 8, padding: "8px 12px" }}><div style={{ fontSize: 11, color: s.isOverdue ? "#854F0B" : "var(--color-text-secondary)" }}>Sonraki beklenen</div><div style={{ fontWeight: 500, fontSize: 15, color: s.isOverdue ? "#854F0B" : "var(--color-text-primary)" }}>{s.nextExpected}</div></div>}
                   </div>
                 )}
                 {s && s.orders.length > 0 && (
-                  <div style={{ marginTop: 12 }}><div style={{ fontSize: 12, fontWeight: 500, color: "var(--color-text-secondary)", marginBottom: 6 }}>Son siparişler</div>
+                  <div style={{ marginTop: 12 }}><div style={{ fontSize: 12, fontWeight: 500, color: "#888", marginBottom: 6 }}>Son siparişler</div>
                     {s.orders.slice(-3).reverse().map(o => (
-                      <div key={o.id} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 12, padding: "5px 0", borderBottom: "0.5px solid var(--color-border-tertiary)" }}>
-                        <span style={{ color: "var(--color-text-secondary)", width: 72, flexShrink: 0 }}>{o.date}</span><span style={{ flex: 1 }}>{o.product}</span>
+                      <div key={o.id} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 12, padding: "5px 0", borderBottom: "0.5px solid #3A3A3A" }}>
+                        <span style={{ color: "#888", width: 72, flexShrink: 0 }}>{o.date}</span><span style={{ flex: 1 }}>{o.product}</span>
                         <OrderStatusBadge status={o.orderStatus || "production"} />
                         <span style={{ fontWeight: 500 }}>{fmtCurrency(o.qty * o.unitPrice, o.currency)}</span>
                       </div>))}
                   </div>
                 )}
                 <div style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap" }}>
-                  <button onClick={() => openOrderForm(null, c.id)} style={{ background: "var(--color-background-secondary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", fontWeight: 500 }}>+ Sipariş ekle</button>
-                  <button onClick={() => openCustomerForm(c)} style={{ background: "var(--color-background-secondary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", fontWeight: 500 }}>Düzenle</button>
+                  <button onClick={() => openOrderForm(null, c.id)} style={{ background: "#2E2E2E", border: "0.5px solid #3A3A3A", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", fontWeight: 500 }}>+ Sipariş ekle</button>
+                  <button onClick={() => openCustomerForm(c)} style={{ background: "#2E2E2E", border: "0.5px solid #3A3A3A", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", fontWeight: 500 }}>Düzenle</button>
                   {c.phone && <button onClick={() => sendWhatsApp(c.phone, c.name)} style={{ background: "#E1F5EE", border: "1px solid #5DCAA5", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", color: "#0F6E56", fontWeight: 500 }}>WhatsApp</button>}
                   <button onClick={() => deleteCustomer(c.id)} style={{ background: "#FCEBEB", border: "1px solid #F09595", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", color: "#A32D2D", fontWeight: 500, marginLeft: "auto" }}>Sil</button>
                 </div>
               </div>
             )}
           </div>); })}
-        {filteredCustomers.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "var(--color-text-secondary)" }}>Müşteri bulunamadı</div>}
+        {filteredCustomers.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "#888" }}>Müşteri bulunamadı</div>}
       </div>
     </div>
   );
@@ -452,15 +484,15 @@ export default function CRMApp() {
             const totalRev = group.orders.reduce((s, o) => s + o.qty * o.unitPrice, 0);
             const cur = group.orders[0]?.currency || "USD";
             return (
-              <div key={custId} style={{ background: "var(--color-background-primary)", border: isOpen ? "1px solid var(--color-border-primary)" : "0.5px solid var(--color-border-tertiary)", borderRadius: 10 }}>
+              <div key={custId} style={{ background: "#242424", border: isOpen ? "1px solid var(--color-border-primary)" : "0.5px solid var(--color-border-tertiary)", borderRadius: 10 }}>
                 {/* Customer header row */}
                 <div onClick={() => setExpandedOrderCustomer(isOpen ? null : custId)} style={{ display: "flex", alignItems: "center", padding: "12px 16px", cursor: "pointer", gap: 10, userSelect: "none" }}>
-                  <span style={{ fontSize: 11, transition: "transform 0.2s", transform: isOpen ? "rotate(90deg)" : "rotate(0deg)", color: "var(--color-text-secondary)", flexShrink: 0, width: 14, textAlign: "center" }}>&#9654;</span>
+                  <span style={{ fontSize: 11, transition: "transform 0.2s", transform: isOpen ? "rotate(90deg)" : "rotate(0deg)", color: "#888", flexShrink: 0, width: 14, textAlign: "center" }}>&#9654;</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <span style={{ fontWeight: 500, fontSize: 14 }}>{group.name}</span>
-                    <span style={{ fontSize: 12, color: "var(--color-text-secondary)", marginLeft: 8 }}>{group.country}</span>
+                    <span style={{ fontSize: 12, color: "#888", marginLeft: 8 }}>{group.country}</span>
                   </div>
-                  <span style={{ fontSize: 12, color: "var(--color-text-secondary)", flexShrink: 0 }}>{group.orders.length} sipariş</span>
+                  <span style={{ fontSize: 12, color: "#888", flexShrink: 0 }}>{group.orders.length} sipariş</span>
                   {/* Status dropdown trigger */}
                   {(() => {
                     const statusCounts = {};
@@ -474,11 +506,11 @@ export default function CRMApp() {
                             const st = ORDER_STATUS[s] || ORDER_STATUS.production;
                             return <span key={s} style={{ display: "inline-flex", alignItems: "center", gap: 2 }}><span style={{ width: 7, height: 7, borderRadius: "50%", background: st.color }} /><span style={{ fontSize: 11, color: st.color, fontWeight: 500 }}>{cnt}</span></span>;
                           })}
-                          <span style={{ fontSize: 14, color: "#666", marginLeft: 2, fontWeight: 500 }}>&#9660;</span>
+                          <span style={{ fontSize: 14, color: "#777", marginLeft: 2, fontWeight: 500 }}>&#9660;</span>
                         </button>
                         {isDropOpen && (
-                          <div style={{ position: "absolute", top: "110%", right: 0, zIndex: 200, background: "#fff", border: "0.5px solid #ccc", borderRadius: 8, minWidth: 210, boxShadow: "0 6px 16px rgba(0,0,0,0.15)" }}>
-                            <div style={{ padding: "8px 12px", fontSize: 11, color: "#888", borderBottom: "1px solid #eee" }}>Tüm siparişleri değiştir</div>
+                          <div style={{ position: "absolute", top: "110%", right: 0, zIndex: 200, background: "#2A2A2A", border: "0.5px solid #444", borderRadius: 8, minWidth: 210, boxShadow: "0 6px 16px rgba(0,0,0,0.15)" }}>
+                            <div style={{ padding: "8px 12px", fontSize: 11, color: "#888", borderBottom: "1px solid #3A3A3A" }}>Tüm siparişleri değiştir</div>
                             {Object.entries(ORDER_STATUS).map(([key, val]) => (
                               <div key={key} onClick={() => {
                                 const d = { ...data };
@@ -493,13 +525,13 @@ export default function CRMApp() {
                                 save(d);
                                 setGroupStatusDropdown(null);
                                 showToast(group.orders.length + " sipariş: " + val.label);
-                              }} style={{ padding: "8px 14px", cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", gap: 8, background: "#fff", color: "#222" }}
+                              }} style={{ padding: "8px 14px", cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", gap: 8, background: "#2A2A2A", color: "#E8E6DF" }}
                                 onMouseEnter={e => e.currentTarget.style.background = "#f0f0f0"}
                                 onMouseLeave={e => e.currentTarget.style.background = "#fff"}
                               >
                                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: val.color, flexShrink: 0 }} />
                                 <span style={{ flex: 1 }}>{val.label}</span>
-                                <span style={{ fontSize: 11, color: "#aaa" }}>{statusCounts[key] || 0}/{group.orders.length}</span>
+                                <span style={{ fontSize: 11, color: "#777" }}>{statusCounts[key] || 0}/{group.orders.length}</span>
                               </div>
                             ))}
                           </div>
@@ -512,10 +544,10 @@ export default function CRMApp() {
 
                 {/* Expanded orders table */}
                 {isOpen && (
-                  <div style={{ borderTop: "0.5px solid var(--color-border-tertiary)", padding: "0 16px 12px" }}>
+                  <div style={{ borderTop: "0.5px solid #3A3A3A", padding: "0 16px 12px" }}>
                     <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, marginTop: 8 }}>
                       <thead><tr>
-                        {["Tarih", "Ürün", "Miktar", "Toplam", "Kar", "Marj", "Durum", ""].map(h => (<th key={h} style={{ padding: "6px 8px", textAlign: "left", fontWeight: 500, fontSize: 11, color: "var(--color-text-secondary)" }}>{h}</th>))}
+                        {["Tarih", "Ürün", "Miktar", "Toplam", "Kar", "Marj", "Durum", ""].map(h => (<th key={h} style={{ padding: "6px 8px", textAlign: "left", fontWeight: 500, fontSize: 11, color: "#888" }}>{h}</th>))}
                       </tr></thead>
                       <tbody>{group.orders.map(o => {
                         const revenue = o.qty * o.unitPrice;
@@ -523,7 +555,7 @@ export default function CRMApp() {
                         const margin = revenue > 0 ? (profit / revenue * 100) : 0;
                         const isDropdownOpen = statusDropdown === o.id;
                         return (
-                          <tr key={o.id} style={{ borderTop: "0.5px solid var(--color-border-tertiary)" }}>
+                          <tr key={o.id} style={{ borderTop: "0.5px solid #3A3A3A" }}>
                             <td style={{ padding: "8px" }}>{o.date}</td>
                             <td style={{ padding: "8px" }}>{o.product}</td>
                             <td style={{ padding: "8px" }}>{o.qty.toLocaleString()}</td>
@@ -533,13 +565,13 @@ export default function CRMApp() {
                             <td style={{ padding: "8px", position: "relative" }}>
                               <button onClick={(e) => { e.stopPropagation(); setStatusDropdown(isDropdownOpen ? null : o.id); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
                                 <OrderStatusBadge status={o.orderStatus || "production"} />
-                                <span style={{ fontSize: 10, marginLeft: 4, color: "var(--color-text-secondary)" }}>▼</span>
+                                <span style={{ fontSize: 10, marginLeft: 4, color: "#888" }}>▼</span>
                               </button>
                               {isDropdownOpen && (
-                                <div style={{ position: "absolute", top: "100%", left: 0, zIndex: 100, background: "#fff", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, overflow: "hidden", minWidth: 140, boxShadow: "0 4px 12px rgba(0,0,0,0.12)" }}>
+                                <div style={{ position: "absolute", top: "100%", left: 0, zIndex: 100, background: "#2A2A2A", border: "0.5px solid #444", borderRadius: 8, overflow: "hidden", minWidth: 140, boxShadow: "0 4px 12px rgba(0,0,0,0.12)" }}>
                                   {Object.entries(ORDER_STATUS).map(([key, val]) => {
                                     const isActive = (o.orderStatus || "production") === key;
-                                    return (<div key={key} onClick={(e) => { e.stopPropagation(); setOrderStatus(o.id, key); }} style={{ padding: "8px 14px", cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", gap: 8, background: isActive ? "#f0f0f0" : "#fff", color: "#222" }} onMouseEnter={e => e.currentTarget.style.background = "#f0f0f0"} onMouseLeave={e => e.currentTarget.style.background = isActive ? "#f0f0f0" : "#fff"}>
+                                    return (<div key={key} onClick={(e) => { e.stopPropagation(); setOrderStatus(o.id, key); }} style={{ padding: "8px 14px", cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", gap: 8, background: isActive ? "#f0f0f0" : "#fff", color: "#E8E6DF" }} onMouseEnter={e => e.currentTarget.style.background = "#f0f0f0"} onMouseLeave={e => e.currentTarget.style.background = isActive ? "#f0f0f0" : "#fff"}>
                                       <span style={{ width: 8, height: 8, borderRadius: "50%", background: val.color, flexShrink: 0 }} />{val.label}
                                     </div>);
                                   })}
@@ -547,7 +579,7 @@ export default function CRMApp() {
                               )}
                             </td>
                             <td style={{ padding: "8px" }}><div style={{ display: "flex", gap: 4 }}>
-                              <button onClick={(e) => { e.stopPropagation(); openOrderForm(o); }} style={{ background: "var(--color-background-secondary)", border: "none", borderRadius: 4, padding: "2px 6px", fontSize: 13, cursor: "pointer" }}>✎</button>
+                              <button onClick={(e) => { e.stopPropagation(); openOrderForm(o); }} style={{ background: "#2E2E2E", border: "none", borderRadius: 4, padding: "2px 6px", fontSize: 13, cursor: "pointer" }}>✎</button>
                               <button onClick={(e) => { e.stopPropagation(); deleteOrder(o.id); }} style={{ background: "#FCEBEB", border: "none", borderRadius: 4, padding: "2px 6px", fontSize: 13, cursor: "pointer", color: "#A32D2D" }}>×</button>
                             </div></td>
                           </tr>);
@@ -560,8 +592,8 @@ export default function CRMApp() {
           })}
         </div>
 
-        {activeOrders.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "var(--color-text-secondary)" }}>Tüm siparişler tamamlanmış</div>}
-        <div style={{ marginTop: 12, fontSize: 12, color: "var(--color-text-secondary)", padding: "8px 10px", background: "var(--color-background-secondary)", borderRadius: 8 }}>
+        {activeOrders.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "#888" }}>Tüm siparişler tamamlanmış</div>}
+        <div style={{ marginTop: 12, fontSize: 12, color: "#888", padding: "8px 10px", background: "#2E2E2E", borderRadius: 8 }}>
           Durum rozetine tıklayıp açılan menüden seçim yapın. Tamamlanan siparişler otomatik olarak tahsilata ve "Tamamlananlar" sekmesine aktarılır.
         </div>
       </div>
@@ -579,7 +611,7 @@ export default function CRMApp() {
         <h2 style={{ fontSize: 22, fontWeight: 500, marginBottom: 16 }}>Tahsilat takibi</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12, marginBottom: 20 }}>
           <div style={{ background: "#FCEBEB", borderRadius: 10, padding: "14px 16px" }}><div style={{ fontSize: 12, color: "#791F1F", marginBottom: 4, fontWeight: 500 }}>Bekleyen toplam</div><div style={{ fontSize: 22, fontWeight: 500, color: "#A32D2D" }}>{fmtCurrency(totalPending)}</div></div>
-          <div style={{ background: "var(--color-background-secondary)", borderRadius: 10, padding: "14px 16px" }}><div style={{ fontSize: 12, color: "var(--color-text-secondary)", marginBottom: 4, fontWeight: 500 }}>Bekleyen kayıt</div><div style={{ fontSize: 22, fontWeight: 500 }}>{unpaid.length}</div></div>
+          <div style={{ background: "#2E2E2E", borderRadius: 10, padding: "14px 16px" }}><div style={{ fontSize: 12, color: "#888", marginBottom: 4, fontWeight: 500 }}>Bekleyen kayıt</div><div style={{ fontSize: 22, fontWeight: 500 }}>{unpaid.length}</div></div>
         </div>
         <div style={{ marginBottom: 16 }}><select value={collectionFilter} onChange={e => setCollectionFilter(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 160 }}><option value="all">Tümü</option><option value="pending">Bekliyor</option><option value="partial">Kısmi ödeme</option><option value="overdue">Gecikmiş</option></select></div>
         <div style={{ display: "grid", gap: 8 }}>
@@ -588,7 +620,7 @@ export default function CRMApp() {
             const remaining = col.amount - col.paidAmount; const progress = col.amount > 0 ? (col.paidAmount / col.amount * 100) : 0;
             const daysLeft = daysBetween(new Date().toISOString().slice(0, 10), col.dueDate);
             return (
-              <div key={col.id} style={{ background: "var(--color-background-primary)", border: `0.5px solid ${col.status === "overdue" ? "#F09595" : "var(--color-border-tertiary)"}`, borderRadius: 12, padding: "14px 18px" }}>
+              <div key={col.id} style={{ background: "#242424", border: `0.5px solid ${col.status === "overdue" ? "#F09595" : "var(--color-border-tertiary)"}`, borderRadius: 12, padding: "14px 18px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <div onClick={() => updateCollection(col.id, { paidAmount: col.amount })} title="Tahsilatı tamamla" style={{
@@ -598,13 +630,13 @@ export default function CRMApp() {
                       onMouseEnter={e => { e.currentTarget.style.borderColor = "#3B6D11"; e.currentTarget.style.background = "#EAF3DE"; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = "#B4B2A9"; e.currentTarget.style.background = "transparent"; }}
                     />
-                    <div><span style={{ fontWeight: 500, fontSize: 15 }}>{cust?.name || "—"}</span><CollectionBadge status={col.status} />{order && <span style={{ fontSize: 12, color: "var(--color-text-secondary)", marginLeft: 8 }}>{order.product}</span>}</div>
+                    <div><span style={{ fontWeight: 500, fontSize: 15 }}>{cust?.name || "—"}</span><CollectionBadge status={col.status} />{order && <span style={{ fontSize: 12, color: "#888", marginLeft: 8 }}>{order.product}</span>}</div>
                   </div>
                   <div style={{ textAlign: "right" }}><div style={{ fontWeight: 500, fontSize: 16 }}>{fmtCurrency(col.amount, col.currency)}</div>{remaining > 0 && <div style={{ fontSize: 12, color: "#A32D2D" }}>Kalan: {fmtCurrency(remaining, col.currency)}</div>}</div>
                 </div>
-                <div style={{ background: "var(--color-background-tertiary)", borderRadius: 6, height: 6, marginBottom: 10, overflow: "hidden" }}><div style={{ height: "100%", borderRadius: 6, width: progress + "%", background: progress >= 100 ? "#3B6D11" : progress > 0 ? "#185FA5" : "transparent", transition: "width 0.3s" }} /></div>
+                <div style={{ background: "#1A1A1A", borderRadius: 6, height: 6, marginBottom: 10, overflow: "hidden" }}><div style={{ height: "100%", borderRadius: 6, width: progress + "%", background: progress >= 100 ? "#3B6D11" : progress > 0 ? "#185FA5" : "transparent", transition: "width 0.3s" }} /></div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 13, flexWrap: "wrap", gap: 8 }}>
-                  <div style={{ display: "flex", gap: 14, color: "var(--color-text-secondary)" }}>
+                  <div style={{ display: "flex", gap: 14, color: "#888" }}>
                     <span>Vade: {col.dueDate}</span>
                     <span style={{ color: daysLeft < 0 ? "#A32D2D" : daysLeft <= 7 ? "#854F0B" : "var(--color-text-secondary)" }}>{daysLeft < 0 ? `${Math.abs(daysLeft)} gün gecikmiş` : `${daysLeft} gün kaldı`}</span>
                   </div>
@@ -614,11 +646,11 @@ export default function CRMApp() {
                     {col.status === "paid" && <span style={{ fontSize: 12, color: "#3B6D11", fontWeight: 500 }}>Tamamlandı</span>}
                   </div>
                 </div>
-                {col.notes && <div style={{ fontSize: 12, color: "var(--color-text-secondary)", marginTop: 6, fontStyle: "italic" }}>{col.notes}</div>}
+                {col.notes && <div style={{ fontSize: 12, color: "#888", marginTop: 6, fontStyle: "italic" }}>{col.notes}</div>}
               </div>
             );
           })}
-          {sorted.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "var(--color-text-secondary)" }}>Tahsilat kaydı bulunamadı</div>}
+          {sorted.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "#888" }}>Tahsilat kaydı bulunamadı</div>}
         </div>
       </div>
     );
@@ -643,14 +675,14 @@ export default function CRMApp() {
             <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 10 }}>Tamamlanan siparişler</div>
             <div style={{ overflowX: "auto" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-                <thead><tr style={{ borderBottom: "1px solid var(--color-border-tertiary)" }}>
-                  {["Tarih", "Müşteri", "Ürün", "Miktar", "Toplam", "Kar", "Marj"].map(h => (<th key={h} style={{ padding: "8px 10px", textAlign: "left", fontWeight: 500, fontSize: 12, color: "var(--color-text-secondary)" }}>{h}</th>))}
+                <thead><tr style={{ borderBottom: "1px solid #3A3A3A" }}>
+                  {["Tarih", "Müşteri", "Ürün", "Miktar", "Toplam", "Kar", "Marj"].map(h => (<th key={h} style={{ padding: "8px 10px", textAlign: "left", fontWeight: 500, fontSize: 12, color: "#888" }}>{h}</th>))}
                 </tr></thead>
                 <tbody>{completedOrders.map(o => {
                   const cust = data.customers.find(c => c.id === o.customerId);
                   const revenue = o.qty * o.unitPrice; const profit = revenue - o.qty * o.costPrice; const margin = revenue > 0 ? (profit / revenue * 100) : 0;
                   return (
-                    <tr key={o.id} style={{ borderBottom: "0.5px solid var(--color-border-tertiary)" }}>
+                    <tr key={o.id} style={{ borderBottom: "0.5px solid #3A3A3A" }}>
                       <td style={{ padding: "10px" }}>{o.date}</td>
                       <td style={{ padding: "10px", fontWeight: 500 }}>{cust?.name || "—"}</td>
                       <td style={{ padding: "10px" }}>{o.product}</td>
@@ -672,7 +704,7 @@ export default function CRMApp() {
               {paidCollections.map(col => {
                 const cust = data.customers.find(c => c.id === col.customerId); const order = data.orders.find(o => o.id === col.orderId);
                 return (
-                  <div key={col.id} style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 10, padding: "12px 16px" }}>
+                  <div key={col.id} style={{ display: "flex", alignItems: "center", gap: 12, background: "#242424", border: "0.5px solid #3A3A3A", borderRadius: 10, padding: "12px 16px" }}>
                     <div onClick={() => updateCollection(col.id, { paidAmount: 0 })} title="Tahsilatı geri al" style={{
                       width: 22, height: 22, borderRadius: 4, border: "2px solid #3B6D11", background: "#EAF3DE", cursor: "pointer", flexShrink: 0,
                       display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s"
@@ -684,7 +716,7 @@ export default function CRMApp() {
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontWeight: 500, fontSize: 14 }}>{cust?.name || "—"}</div>
-                      <div style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>{order?.product || "—"} — Vade: {col.dueDate}</div>
+                      <div style={{ fontSize: 12, color: "#888" }}>{order?.product || "—"} — Vade: {col.dueDate}</div>
                     </div>
                     <div style={{ textAlign: "right", flexShrink: 0 }}>
                       <div style={{ fontWeight: 500, fontSize: 14, color: "#3B6D11" }}>{fmtCurrency(col.paidAmount, col.currency)}</div>
@@ -693,13 +725,13 @@ export default function CRMApp() {
                 );
               })}
             </div>
-            <div style={{ marginTop: 8, fontSize: 12, color: "var(--color-text-secondary)", padding: "6px 10px", background: "var(--color-background-secondary)", borderRadius: 8 }}>
+            <div style={{ marginTop: 8, fontSize: 12, color: "#888", padding: "6px 10px", background: "#2E2E2E", borderRadius: 8 }}>
               Tik kutusuna tıklayarak tahsilatı geri alıp tekrar tahsilat sekmesine gönderebilirsiniz.
             </div>
           </div>
         )}
 
-        {completedOrders.length === 0 && paidCollections.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "var(--color-text-secondary)" }}>Henüz tamamlanan sipariş yok</div>}
+        {completedOrders.length === 0 && paidCollections.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "#888" }}>Henüz tamamlanan sipariş yok</div>}
       </div>
     );
   };
@@ -716,12 +748,12 @@ export default function CRMApp() {
             <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, color: "#854F0B" }}>Sipariş zamanı gelen aktif müşteriler</div>
             <div style={{ display: "grid", gap: 8 }}>
               {activeWithOrders.map(c => { const dl = daysBetween(new Date().toISOString().slice(0, 10), c.nextExpected); const urgent = dl <= 0; return (
-                <div key={c.id} style={{ background: "var(--color-background-primary)", border: `1px solid ${urgent ? "#F09595" : "#FAC775"}`, borderRadius: 12, padding: "12px 16px" }}>
+                <div key={c.id} style={{ background: "#242424", border: `1px solid ${urgent ? "#F09595" : "#FAC775"}`, borderRadius: 12, padding: "12px 16px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div><span style={{ fontWeight: 500, fontSize: 14 }}>{c.name}</span><StatusBadge status="active" /><span style={{ display: "inline-block", fontSize: 11, padding: "2px 8px", borderRadius: 20, marginLeft: 6, background: urgent ? "#FCEBEB" : "#FAEEDA", color: urgent ? "#791F1F" : "#854F0B", fontWeight: 500 }}>{urgent ? `${Math.abs(dl)} gün gecikmiş` : `${dl} gün kaldı`}</span></div>
                     {c.phone && <button onClick={() => sendWhatsApp(c.phone, c.name, `Merhaba ${c.name}, son siparişinizin üzerinden ${c.avgDays} gün geçti. Yeni sipariş vermek ister misiniz?`)} style={{ background: "#1D9E75", color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", fontWeight: 500 }}>WhatsApp</button>}
                   </div>
-                  <div style={{ fontSize: 12, color: "var(--color-text-secondary)", marginTop: 4, display: "flex", gap: 16, flexWrap: "wrap" }}><span>Son: {c.lastOrder}</span><span>Beklenen: {c.nextExpected}</span><span>Ort. aralık: {c.avgDays} gün</span></div>
+                  <div style={{ fontSize: 12, color: "#888", marginTop: 4, display: "flex", gap: 16, flexWrap: "wrap" }}><span>Son: {c.lastOrder}</span><span>Beklenen: {c.nextExpected}</span><span>Ort. aralık: {c.avgDays} gün</span></div>
                 </div>); })}
             </div>
           </div>
@@ -731,7 +763,7 @@ export default function CRMApp() {
             <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, color: "#A32D2D" }}>Yaklaşan / gecikmiş tahsilatlar</div>
             <div style={{ display: "grid", gap: 8 }}>
               {pendingCols.map(c => { const rem = c.amount - c.paidAmount; const dl = daysBetween(new Date().toISOString().slice(0, 10), c.dueDate); return (
-                <div key={c.id} style={{ background: "var(--color-background-primary)", border: `1px solid ${dl < 0 ? "#F09595" : "#FAC775"}`, borderRadius: 12, padding: "12px 16px" }}>
+                <div key={c.id} style={{ background: "#242424", border: `1px solid ${dl < 0 ? "#F09595" : "#FAC775"}`, borderRadius: 12, padding: "12px 16px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div><span style={{ fontWeight: 500, fontSize: 14 }}>{c.customerName}</span><span style={{ fontSize: 13, color: "#A32D2D", marginLeft: 8, fontWeight: 500 }}>{fmtCurrency(rem, c.currency)}</span><span style={{ fontSize: 11, color: dl < 0 ? "#791F1F" : "#854F0B", marginLeft: 8 }}>{dl < 0 ? `${Math.abs(dl)} gün gecikmiş` : `${dl} gün kaldı`}</span></div>
                     {c.customerPhone && <button onClick={() => sendWhatsApp(c.customerPhone, c.customerName, `Merhaba ${c.customerName}, ${fmtCurrency(rem, c.currency)} tutarındaki ödemeniz beklenmektedir.`)} style={{ background: "#1D9E75", color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", fontWeight: 500 }}>Hatırlat</button>}
@@ -745,20 +777,20 @@ export default function CRMApp() {
             <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, color: "#185FA5" }}>Potansiyel müşteriler — takip et</div>
             <div style={{ display: "grid", gap: 8 }}>
               {potentialCustomers.map(c => (
-                <div key={c.id} style={{ background: "var(--color-background-primary)", border: "1px solid #85B7EB", borderRadius: 12, padding: "12px 16px" }}>
+                <div key={c.id} style={{ background: "#242424", border: "1px solid #85B7EB", borderRadius: 12, padding: "12px 16px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div><span style={{ fontWeight: 500, fontSize: 14 }}>{c.name}</span><StatusBadge status="potential" /><span style={{ fontSize: 12, color: "var(--color-text-secondary)", marginLeft: 8 }}>{c.daysSinceCreated} gündür takipte — {c.country}, {c.sector}</span></div>
+                    <div><span style={{ fontWeight: 500, fontSize: 14 }}>{c.name}</span><StatusBadge status="potential" /><span style={{ fontSize: 12, color: "#888", marginLeft: 8 }}>{c.daysSinceCreated} gündür takipte — {c.country}, {c.sector}</span></div>
                     <div style={{ display: "flex", gap: 6 }}>
                       {c.phone && <button onClick={() => sendWhatsApp(c.phone, c.name, `Merhaba ${c.name}, daha önce görüştüğümüz konuyla ilgili tekrar iletişime geçmek istiyoruz.`)} style={{ background: "#1D9E75", color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", fontWeight: 500 }}>WhatsApp</button>}
                       <button onClick={() => { const d = { ...data }; d.customers = d.customers.map(cu => cu.id === c.id ? { ...cu, status: "active" } : cu); save(d); showToast(`${c.name} aktif müşteriye çevrildi`); }} style={{ background: "#E6F1FB", border: "1px solid #85B7EB", borderRadius: 8, padding: "6px 14px", fontSize: 12, cursor: "pointer", color: "#185FA5", fontWeight: 500 }}>Aktife al</button>
                     </div>
                   </div>
-                  {c.notes && <div style={{ fontSize: 12, color: "var(--color-text-secondary)", marginTop: 4, fontStyle: "italic" }}>{c.notes}</div>}
+                  {c.notes && <div style={{ fontSize: 12, color: "#888", marginTop: 4, fontStyle: "italic" }}>{c.notes}</div>}
                 </div>))}
             </div>
           </div>
         )}
-        {activeWithOrders.length === 0 && potentialCustomers.length === 0 && pendingCols.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "var(--color-text-secondary)" }}>Henüz hatırlatma yok</div>}
+        {activeWithOrders.length === 0 && potentialCustomers.length === 0 && pendingCols.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "#888" }}>Henüz hatırlatma yok</div>}
       </div>
     );
   };
@@ -777,12 +809,12 @@ export default function CRMApp() {
         </div>
         <div style={{ display: "grid", gap: 6 }}>
           {filtered.map(f => { const cust = data.customers.find(c => c.id === f.customerId); const isPdf = f.name.toLowerCase().endsWith(".pdf"); const isDoc = f.name.toLowerCase().includes(".doc"); const isXls = f.name.toLowerCase().includes(".xls"); const iconColor = isPdf ? "#A32D2D" : isDoc ? "#185FA5" : isXls ? "#3B6D11" : "#534AB7"; const iconBg = isPdf ? "#FCEBEB" : isDoc ? "#E6F1FB" : isXls ? "#EAF3DE" : "#EEEDFE"; const iconText = isPdf ? "PDF" : isDoc ? "DOC" : isXls ? "XLS" : "FILE"; return (
-            <div key={f.id} style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 10, padding: "10px 16px" }}>
+            <div key={f.id} style={{ display: "flex", alignItems: "center", gap: 12, background: "#242424", border: "0.5px solid #3A3A3A", borderRadius: 10, padding: "10px 16px" }}>
               <div style={{ width: 36, height: 36, borderRadius: 8, background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 500, fontSize: 10, color: iconColor, flexShrink: 0 }}>{iconText}</div>
-              <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontWeight: 500, fontSize: 14, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{f.name}</div><div style={{ fontSize: 12, color: "var(--color-text-secondary)", display: "flex", gap: 12 }}>{cust && <span>{cust.name}</span>}<span>{f.date}</span><span>{f.size}</span></div></div>
+              <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontWeight: 500, fontSize: 14, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{f.name}</div><div style={{ fontSize: 12, color: "#888", display: "flex", gap: 12 }}>{cust && <span>{cust.name}</span>}<span>{f.date}</span><span>{f.size}</span></div></div>
               <button onClick={() => { setDriveFiles(driveFiles.filter(x => x.id !== f.id)); showToast("Dosya silindi", "warn"); }} style={{ background: "#FCEBEB", border: "none", borderRadius: 6, padding: "4px 8px", fontSize: 13, cursor: "pointer", color: "#A32D2D", flexShrink: 0 }}>×</button>
             </div>); })}
-          {filtered.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "var(--color-text-secondary)" }}>Dosya bulunamadı</div>}
+          {filtered.length === 0 && <div style={{ padding: 32, textAlign: "center", color: "#888" }}>Dosya bulunamadı</div>}
         </div>
       </div>
     );
@@ -908,9 +940,9 @@ export default function CRMApp() {
 
       {/* STEP: IDLE — file upload */}
       {(st.step === "idle" || st.step === "error") && (
-        <div style={{ background: "#fff", border: "1px solid #D85A30", borderRadius: 12, padding: 24, marginBottom: 20 }}>
+        <div style={{ background: "#2A2A2A", border: "1px solid #D85A30", borderRadius: 12, padding: 24, marginBottom: 20 }}>
           <div style={{ fontWeight: 500, fontSize: 16, marginBottom: 12, color: "#D85A30" }}>AI ile akıllı müşteri ekleme</div>
-          <p style={{ fontSize: 14, color: "#444", marginBottom: 16, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 14, color: "#ccc", marginBottom: 16, lineHeight: 1.6 }}>
             Proforma, fatura veya müşteri dosyanızı yükleyin. AI otomatik analiz eder, ön izleme gösterir ve onayınıza sunar.
           </p>
           {st.error && <div style={{ background: "#FCEBEB", border: "1px solid #F09595", borderRadius: 8, padding: 12, marginBottom: 16, fontSize: 13, color: "#791F1F" }}>{st.error}</div>}
@@ -928,18 +960,18 @@ export default function CRMApp() {
 
       {/* STEP: ANALYZING */}
       {st.step === "analyzing" && (
-        <div style={{ background: "#fff", border: "1px solid #D85A30", borderRadius: 12, padding: 40, textAlign: "center" }}>
+        <div style={{ background: "#2A2A2A", border: "1px solid #D85A30", borderRadius: 12, padding: 40, textAlign: "center" }}>
           <div style={{ fontSize: 28, marginBottom: 12, color: "#D85A30" }}>...</div>
           <div style={{ fontWeight: 500, fontSize: 16, color: "#D85A30", marginBottom: 8 }}>AI analiz ediyor</div>
           <div style={{ fontSize: 14, color: "#888" }}>{st.fileName}</div>
-          <div style={{ fontSize: 13, color: "#aaa", marginTop: 8 }}>Bu işlem birkaç saniye sürebilir...</div>
-          <button onClick={() => setAiImport({ step: "idle", loading: false, fileName: "", preview: null, editPreview: null, error: null })} style={{ marginTop: 16, padding: "8px 20px", borderRadius: 8, border: "1px solid #ddd", background: "#fff", cursor: "pointer", fontSize: 13, color: "#666" }}>İptal</button>
+          <div style={{ fontSize: 13, color: "#777", marginTop: 8 }}>Bu işlem birkaç saniye sürebilir...</div>
+          <button onClick={() => setAiImport({ step: "idle", loading: false, fileName: "", preview: null, editPreview: null, error: null })} style={{ marginTop: 16, padding: "8px 20px", borderRadius: 8, border: "1px solid #444", background: "#2A2A2A", cursor: "pointer", fontSize: 13, color: "#777" }}>İptal</button>
         </div>
       )}
 
       {/* STEP: PREVIEW — editable */}
       {st.step === "preview" && ep && (
-        <div style={{ background: "#fff", border: "1px solid #D85A30", borderRadius: 12, padding: 24 }}>
+        <div style={{ background: "#2A2A2A", border: "1px solid #D85A30", borderRadius: 12, padding: 24 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
             <div>
               <div style={{ fontWeight: 500, fontSize: 16, color: "#D85A30" }}>Ön izleme</div>
@@ -951,14 +983,14 @@ export default function CRMApp() {
           {st.error && <div style={{ background: "#FAEEDA", border: "1px solid #FAC775", borderRadius: 8, padding: 10, marginBottom: 14, fontSize: 12, color: "#854F0B" }}>{st.error}</div>}
 
           {/* Proforma bilgileri */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14, paddingBottom: 14, borderBottom: "1px solid #eee" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14, paddingBottom: 14, borderBottom: "1px solid #3A3A3A" }}>
             <div><label style={{ display: "block", fontSize: 12, color: "#888", marginBottom: 4, fontWeight: 500 }}>Proforma No</label><input style={inputStyle} value={ep.proformaNo || ""} onChange={e => updEp("proformaNo", e.target.value)} /></div>
             <div><label style={{ display: "block", fontSize: 12, color: "#888", marginBottom: 4, fontWeight: 500 }}>Tarih</label><input style={inputStyle} value={ep.proformaDate || ""} onChange={e => updEp("proformaDate", e.target.value)} /></div>
           </div>
 
           {/* Müşteri bilgileri */}
-          <div style={{ marginBottom: 14, paddingBottom: 14, borderBottom: "1px solid #eee" }}>
-            <div style={{ fontSize: 13, fontWeight: 500, color: "#333", marginBottom: 8 }}>Müşteri bilgileri</div>
+          <div style={{ marginBottom: 14, paddingBottom: 14, borderBottom: "1px solid #3A3A3A" }}>
+            <div style={{ fontSize: 13, fontWeight: 500, color: "#E8E6DF", marginBottom: 8 }}>Müşteri bilgileri</div>
             <div style={{ marginBottom: 10 }}><label style={{ display: "block", fontSize: 12, color: "#888", marginBottom: 4, fontWeight: 500 }}>Firma adı</label><input style={inputStyle} value={ep.company} onChange={e => updEp("company", e.target.value)} /></div>
             <div style={{ marginBottom: 10 }}><label style={{ display: "block", fontSize: 12, color: "#888", marginBottom: 4, fontWeight: 500 }}>Ülke</label><input style={inputStyle} value={ep.country} onChange={e => updEp("country", e.target.value)} /></div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -969,11 +1001,11 @@ export default function CRMApp() {
 
           {/* Ürünler tablosu */}
           {ep.products && ep.products.length > 0 && (
-            <div style={{ marginBottom: 14, paddingBottom: 14, borderBottom: "1px solid #eee" }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: "#333", marginBottom: 8 }}>Ürünler / Siparişler</div>
+            <div style={{ marginBottom: 14, paddingBottom: 14, borderBottom: "1px solid #3A3A3A" }}>
+              <div style={{ fontSize: 13, fontWeight: 500, color: "#E8E6DF", marginBottom: 8 }}>Ürünler / Siparişler</div>
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
-                  <thead><tr style={{ background: "#f8f8f8" }}>
+                  <thead><tr style={{ background: "#333" }}>
                     <th style={{ padding: "6px 8px", textAlign: "left", color: "#888", fontWeight: 500 }}>Ürün</th>
                     <th style={{ padding: "6px 8px", textAlign: "left", color: "#888", fontWeight: 500 }}>Boyut</th>
                     <th style={{ padding: "6px 8px", textAlign: "left", color: "#888", fontWeight: 500 }}>Kağıt</th>
@@ -1001,15 +1033,15 @@ export default function CRMApp() {
             </div>
           )}
 
-          <div style={{ display: "flex", gap: 10, paddingTop: 14, borderTop: "1px solid #eee" }}>
+          <div style={{ display: "flex", gap: 10, paddingTop: 14, borderTop: "1px solid #3A3A3A" }}>
             <button onClick={approveAIImport} style={{ flex: 1, padding: "10px 20px", borderRadius: 8, border: "none", background: "#0F6E56", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 500 }}>Onayla ve ekle</button>
-            <button onClick={() => setAiImport({ step: "idle", loading: false, fileName: "", preview: null, editPreview: null, error: null })} style={{ flex: 1, padding: "10px 20px", borderRadius: 8, border: "1px solid #A32D2D", background: "#fff", color: "#A32D2D", cursor: "pointer", fontSize: 14, fontWeight: 500 }}>Reddet / İptal</button>
+            <button onClick={() => setAiImport({ step: "idle", loading: false, fileName: "", preview: null, editPreview: null, error: null })} style={{ flex: 1, padding: "10px 20px", borderRadius: 8, border: "1px solid #A32D2D", background: "#2A2A2A", color: "#A32D2D", cursor: "pointer", fontSize: 14, fontWeight: 500 }}>Reddet / İptal</button>
           </div>
           <div style={{ fontSize: 12, color: "#888", marginTop: 8, textAlign: "center" }}>Tüm alanları düzenleyebilirsiniz</div>
         </div>
       )}
 
-      <div style={{ background: "#fff", border: "0.5px solid #ddd", borderRadius: 12, padding: 24, marginTop: 20 }}>
+      <div style={{ background: "#2A2A2A", border: "0.5px solid #444", borderRadius: 12, padding: 24, marginTop: 20 }}>
         <div style={{ fontWeight: 500, fontSize: 15, marginBottom: 8 }}>CSV ile toplu içe aktarma</div>
         <p style={{ fontSize: 13, color: "#888", marginBottom: 16 }}>Alternatif olarak CSV dosyasıyla toplu müşteri ekleyebilirsiniz.</p>
         <input type="file" accept=".csv,.txt,.tsv" onChange={handleCSVImport} style={{ fontSize: 14 }} />
@@ -1018,9 +1050,350 @@ export default function CRMApp() {
   );
   };
 
+  // ==================== CALCULATOR ====================
+  const [calc, setCalc] = useState({
+    height: 78, width: 78, yanYana: 1, paper: "PP OPAK", paperPrice: 0.49,
+    tersBaski: false, lak: false, lakType: "normal", yaldiz: "yok", selefon: false,
+    serigrafi: false, simLak: false, embos: false, katlama: false, ekMaliyet: 0,
+    qty: 1000000, renk: 4, bicak: 500, kliseBirim: 1000,
+    currency: "EUR", usdRate: 40, eurRate: 46,
+    fireRatio: 1.08, startFire: 400, baskiRatio: 0.02, paketleme: 1.03, brutMaliyet: 0.28,
+    satirCarpan: 1.67, satirCarpan2: 2.00
+  });
+
+  const KAGITLAR = [
+    { name: "PP OPAK", price: 0.49 }, { name: "PP ŞEFFAF", price: 0.4558 },
+    { name: "KUŞE", price: 0.3132 }, { name: "KUŞE HIGHGLOSS", price: 0.3348 },
+    { name: "TERMAL EKO", price: 0.3663 }, { name: "TERMAL LAMİNE", price: 0.4452 },
+    { name: "VELLUM", price: 0.324 }, { name: "PP MAT OPAK 60", price: 0.636 },
+    { name: "PP MAT OPAK 80", price: 0.742 }, { name: "PE OPAK", price: 0.53 },
+    { name: "PE ŞEFFAF", price: 0.53 }, { name: "PET BEYAZ OPAK", price: 0.742 },
+    { name: "KUŞE GOLD METALİZE", price: 0.756 }, { name: "KUŞE SİLVER METALİZE", price: 0.756 },
+    { name: "PP SİLVER METALİZE", price: 0.6042 }, { name: "KARTON KUŞE 250gr", price: 0.324 },
+    { name: "KARTON KUŞE 300gr", price: 0.378 }, { name: "KRAFT TAŞIYICI", price: 0.4 },
+    { name: "FLORASAN KAĞIT", price: 0.486 }, { name: "GÜVENLİK - VOID", price: 4.515 },
+    { name: "GÜVENLİK - PVC", price: 4.77 }, { name: "HOLOGRAM", price: 1.8 },
+    { name: "ULTRA CLEAR", price: 0.5512 }, { name: "SANDWICH KUŞE", price: 0.6264 },
+    { name: "RAFYA KUŞE", price: 0.648 }, { name: "POLYART 180", price: 0.954 },
+    { name: "Diğer (fiyat gir)", price: 0.5 }
+  ];
+
+  const RENK_RASYOSU = { 0: 1.0, 1: 1.02, 2: 1.04, 3: 1.06, 4: 1.08, 5: 1.10, 6: 1.12, 7: 1.14, 8: 1.16 };
+
+  const calcResult = useMemo(() => {
+    const c = calc;
+    if (c.height <= 0 || c.width <= 0 || c.qty <= 0) return null;
+
+    // Kağıt m² fiyatı + ek işlemler
+    let kagitM2 = c.paperPrice;
+    if (c.tersBaski) kagitM2 += 0.05;
+    if (c.lak) kagitM2 += (c.lakType === "normal" ? 0.01 : 0);
+    if (c.yaldiz === "sicak") kagitM2 += 0.22;
+    else if (c.yaldiz === "soguk") kagitM2 += 0.26;
+    if (c.selefon) kagitM2 += 0.18;
+    if (c.serigrafi) kagitM2 += 0.10;
+    if (c.simLak) kagitM2 += 0.10;
+    if (c.embos) kagitM2 += 0.10;
+    if (c.katlama) kagitM2 += 0.05;
+    kagitM2 += Number(c.ekMaliyet) || 0;
+    const toplamKagitM2 = kagitM2;
+
+    // Boy ve kağıt en (metre)
+    const boy = (c.height + 3) / 1000; // +3mm gap
+    const kagitEn = ((c.width + 3) * c.yanYana + 15) / 1000; // +15mm kenar payı
+    const bolen = c.yanYana;
+
+    // Firesiz ilk fiyat
+    const firesizFiyat = (boy * kagitEn * toplamKagitM2) / bolen;
+
+    // Kullanılan kağıdın baskı genişliği
+    const baskiGenMM = kagitEn * 1000;
+    const baskiGenCM = baskiGenMM / 10;
+
+    // Maliyet ve satış m² fiyatları
+    const maliyetM2 = toplamKagitM2;
+
+    // Metre ve alan hesapları
+    const metre = c.qty * boy;
+    const fireHaricM2 = c.qty * boy * kagitEn;
+    const boyaRasyosu = RENK_RASYOSU[c.renk] || 1.08;
+    const fireOrani = c.fireRatio;
+    const fireDahilM2 = fireHaricM2 * fireOrani;
+
+    // Toplam birim kağıt
+    const toplamBirimKagit = (fireDahilM2 * toplamKagitM2) / c.qty;
+
+    // Klişe ve bıçak
+    const toplamKlise = c.kliseBirim * c.renk;
+    const kliseBicakBirim = (toplamKlise + c.bicak) / c.qty;
+
+    // Fire dahil toplam metre
+    const fireDahilMetre = (metre * fireOrani) + c.startFire;
+
+    // İşçiliksiz birim maliyet (EURO)
+    const isciliksizEuro = (toplamBirimKagit + kliseBicakBirim) * boyaRasyosu * (1 + c.baskiRatio) * c.paketleme;
+    
+    // İşçilikli birim maliyet
+    const iscilikliEuro = isciliksizEuro * (1 + c.brutMaliyet);
+
+    // TL karşılıkları
+    const isciliksizTL = isciliksizEuro * c.eurRate;
+    const iscilikliTL = iscilikliEuro * c.eurRate;
+
+    // Toplam maliyetler
+    const toplamMaliyetEuro = isciliksizEuro * c.qty;
+    const toplamMaliyetTL = toplamMaliyetEuro * c.eurRate;
+    const toplamIscilikliEuro = iscilikliEuro * c.qty;
+    const toplamIscilikliTL = toplamIscilikliEuro * c.eurRate;
+
+    // Satış fiyatları
+    const minSatisEuro = isciliksizEuro * c.satirCarpan;
+    const pekiyiSatisEuro = isciliksizEuro * c.satirCarpan2;
+    const minSatisTL = minSatisEuro * c.eurRate;
+    const pekiyiSatisTL = pekiyiSatisEuro * c.eurRate;
+    const toplamMinSatisEuro = minSatisEuro * c.qty;
+    const toplamPekiyiSatisEuro = pekiyiSatisEuro * c.qty;
+
+    // Brüt ve net marjlar (minimum satış bazında)
+    const brutMarj = 1 - (isciliksizEuro / minSatisEuro);
+    const netMarj = 1 - (iscilikliEuro / minSatisEuro);
+
+    return {
+      toplamKagitM2, firesizFiyat, baskiGenMM, maliyetM2,
+      metre, fireHaricM2, fireDahilM2, boyaRasyosu,
+      toplamBirimKagit, toplamKlise, kliseBicakBirim, fireDahilMetre,
+      isciliksizEuro, iscilikliEuro, isciliksizTL, iscilikliTL,
+      toplamMaliyetEuro, toplamMaliyetTL, toplamIscilikliEuro, toplamIscilikliTL,
+      minSatisEuro, pekiyiSatisEuro, minSatisTL, pekiyiSatisTL,
+      toplamMinSatisEuro, toplamPekiyiSatisEuro, brutMarj, netMarj
+    };
+  }, [calc]);
+
+  const renderCalculator = () => {
+    const c = calc;
+    const updCalc = (k, v) => setCalc(prev => ({ ...prev, [k]: v }));
+    const fs = { paddingBottom: 12, marginBottom: 12, borderBottom: "1px solid #3A3A3A" };
+    const lb = { display: "block", fontSize: 11, color: "#999", marginBottom: 4, fontWeight: 500 };
+    const r = calcResult;
+
+    return (
+      <div>
+        <h2 style={{ fontSize: 22, fontWeight: 500, marginBottom: 16 }}>Etiket Fiyat Hesaplayıcı</h2>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          {/* SOL: GİRİŞLER */}
+          <div style={{ background: "#242424", border: "0.5px solid #3A3A3A", borderRadius: 12, padding: 20 }}>
+            <div style={{ fontWeight: 500, fontSize: 14, marginBottom: 14, color: "#D85A30" }}>Etiket & Kağıt Bilgileri</div>
+
+            <div style={fs}>
+              <label style={lb}>Etiket boyutu (mm)</label>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <input style={{ ...inputStyle, flex: 1 }} type="number" value={c.height} onChange={e => updCalc("height", Number(e.target.value))} placeholder="Yükseklik" />
+                <span style={{ color: "#666", fontSize: 12 }}>×</span>
+                <input style={{ ...inputStyle, flex: 1 }} type="number" value={c.width} onChange={e => updCalc("width", Number(e.target.value))} placeholder="Genişlik" />
+              </div>
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Yan yana kaçlı</label>
+              <div style={{ display: "flex", gap: 6 }}>
+                {[1,2,3,4,5,6].map(n => (
+                  <button key={n} onClick={() => updCalc("yanYana", n)} style={{ padding: "5px 12px", borderRadius: 6, fontSize: 12, cursor: "pointer", fontWeight: 500, background: c.yanYana === n ? "#D85A30" : "#333", color: c.yanYana === n ? "#fff" : "#999", border: c.yanYana === n ? "none" : "0.5px solid #444" }}>{n}</button>
+                ))}
+              </div>
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Kağıt türü</label>
+              <select style={inputStyle} value={c.paper} onChange={e => { const k = KAGITLAR.find(x => x.name === e.target.value); updCalc("paper", e.target.value); if (k) updCalc("paperPrice", k.price); }}>
+                {KAGITLAR.map(k => <option key={k.name} value={k.name}>{k.name} — €{k.price.toFixed(4)}/m²</option>)}
+              </select>
+              {c.paper === "Diğer (fiyat gir)" && (
+                <input style={{ ...inputStyle, marginTop: 6 }} type="number" step="0.01" value={c.paperPrice} onChange={e => updCalc("paperPrice", Number(e.target.value))} placeholder="€/m² fiyat girin" />
+              )}
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Ek işlemler</label>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                {[
+                  { key: "tersBaski", label: "Ters baskı / Yapışkan öldürme (+0.05€)", val: c.tersBaski },
+                  { key: "lak", label: "Lak (+0.01€)", val: c.lak },
+                  { key: "selefon", label: "Selefon (+0.18€)", val: c.selefon },
+                  { key: "serigrafi", label: "Serigrafi (+0.10€)", val: c.serigrafi },
+                  { key: "simLak", label: "Sim lak (+0.10€)", val: c.simLak },
+                  { key: "embos", label: "Embos (+0.10€)", val: c.embos },
+                  { key: "katlama", label: "Katlama (+0.05€)", val: c.katlama },
+                ].map(item => (
+                  <label key={item.key} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: item.val ? "#D85A30" : "#999", cursor: "pointer", padding: "4px 8px", borderRadius: 6, background: item.val ? "#D85A3015" : "transparent" }}>
+                    <input type="checkbox" checked={item.val} onChange={e => updCalc(item.key, e.target.checked)} style={{ accentColor: "#D85A30" }} />
+                    {item.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Yaldız</label>
+              <div style={{ display: "flex", gap: 6 }}>
+                {[["yok","Yok"],["sicak","Sıcak (+0.22€)"],["soguk","Soğuk (+0.26€)"]].map(([k,l]) => (
+                  <button key={k} onClick={() => updCalc("yaldiz", k)} style={{ padding: "5px 10px", borderRadius: 6, fontSize: 11, cursor: "pointer", fontWeight: 500, background: c.yaldiz === k ? "#D85A30" : "#333", color: c.yaldiz === k ? "#fff" : "#999", border: c.yaldiz === k ? "none" : "0.5px solid #444" }}>{l}</button>
+                ))}
+              </div>
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Ek m² maliyeti (€)</label>
+              <input style={inputStyle} type="number" step="0.01" value={c.ekMaliyet} onChange={e => updCalc("ekMaliyet", Number(e.target.value))} />
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Renk sayısı</label>
+              <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+                {[1,2,3,4,5,6,7,8].map(n => (
+                  <button key={n} onClick={() => updCalc("renk", n)} style={{ padding: "5px 10px", borderRadius: 6, fontSize: 12, cursor: "pointer", fontWeight: 500, background: c.renk === n ? "#D85A30" : "#333", color: c.renk === n ? "#fff" : "#999", border: c.renk === n ? "none" : "0.5px solid #444" }}>{n}</button>
+                ))}
+              </div>
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Miktar (adet)</label>
+              <input style={inputStyle} type="number" value={c.qty} onChange={e => updCalc("qty", Number(e.target.value))} />
+              <div style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap" }}>
+                {[10000,50000,100000,250000,500000,1000000].map(q => (
+                  <button key={q} onClick={() => updCalc("qty", q)} style={{ padding: "3px 8px", borderRadius: 6, fontSize: 10, cursor: "pointer", background: c.qty === q ? "#D85A30" : "#333", color: c.qty === q ? "#fff" : "#999", border: c.qty === q ? "none" : "0.5px solid #444" }}>{q >= 1000000 ? (q/1000000)+"M" : (q/1000)+"K"}</button>
+                ))}
+              </div>
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Bıçak maliyeti (€)</label>
+              <input style={inputStyle} type="number" value={c.bicak} onChange={e => updCalc("bicak", Number(e.target.value))} />
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Birim klişe maliyeti (€)</label>
+              <input style={inputStyle} type="number" value={c.kliseBirim} onChange={e => updCalc("kliseBirim", Number(e.target.value))} />
+            </div>
+
+            <div style={fs}>
+              <label style={lb}>Kurlar</label>
+              <div style={{ display: "flex", gap: 8 }}>
+                <div style={{ flex: 1 }}><span style={{ fontSize: 10, color: "#888" }}>USD/TRY</span><input style={inputStyle} type="number" step="0.01" value={c.usdRate} onChange={e => updCalc("usdRate", Number(e.target.value))} /></div>
+                <div style={{ flex: 1 }}><span style={{ fontSize: 10, color: "#888" }}>EUR/TRY</span><input style={inputStyle} type="number" step="0.01" value={c.eurRate} onChange={e => updCalc("eurRate", Number(e.target.value))} /></div>
+              </div>
+            </div>
+
+            <div>
+              <label style={lb}>Sabitler</label>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, fontSize: 10 }}>
+                <div><span style={{ color: "#888" }}>Fire oranı</span><input style={{ ...inputStyle, padding: "4px 8px", fontSize: 11 }} type="number" step="0.01" value={c.fireRatio} onChange={e => updCalc("fireRatio", Number(e.target.value))} /></div>
+                <div><span style={{ color: "#888" }}>Başlangıç firesi (mt)</span><input style={{ ...inputStyle, padding: "4px 8px", fontSize: 11 }} type="number" value={c.startFire} onChange={e => updCalc("startFire", Number(e.target.value))} /></div>
+                <div><span style={{ color: "#888" }}>Baskı rasyosu</span><input style={{ ...inputStyle, padding: "4px 8px", fontSize: 11 }} type="number" step="0.01" value={c.baskiRatio} onChange={e => updCalc("baskiRatio", Number(e.target.value))} /></div>
+                <div><span style={{ color: "#888" }}>Paketleme</span><input style={{ ...inputStyle, padding: "4px 8px", fontSize: 11 }} type="number" step="0.01" value={c.paketleme} onChange={e => updCalc("paketleme", Number(e.target.value))} /></div>
+                <div><span style={{ color: "#888" }}>Brüt maliyet oranı</span><input style={{ ...inputStyle, padding: "4px 8px", fontSize: 11 }} type="number" step="0.01" value={c.brutMaliyet} onChange={e => updCalc("brutMaliyet", Number(e.target.value))} /></div>
+                <div><span style={{ color: "#888" }}>Satış çarpanı (min)</span><input style={{ ...inputStyle, padding: "4px 8px", fontSize: 11 }} type="number" step="0.01" value={c.satirCarpan} onChange={e => updCalc("satirCarpan", Number(e.target.value))} /></div>
+              </div>
+            </div>
+          </div>
+
+          {/* SAĞ: SONUÇLAR */}
+          <div>
+            {r ? (<>
+              {/* Teknik hesaplar */}
+              <div style={{ background: "#242424", border: "0.5px solid #3A3A3A", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+                <div style={{ fontWeight: 500, fontSize: 13, color: "#999", marginBottom: 10 }}>Teknik hesaplar</div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, fontSize: 11 }}>
+                  {[
+                    ["Toplam kağıt €/m²", "€" + r.toplamKagitM2.toFixed(4)],
+                    ["Baskı genişliği", r.baskiGenMM.toFixed(0) + " mm"],
+                    ["Firesiz ilk fiyat", "€" + r.firesizFiyat.toFixed(6)],
+                    ["Fire hariç m²", r.fireHaricM2.toFixed(0) + " m²"],
+                    ["Fire dahil m²", r.fireDahilM2.toFixed(0) + " m²"],
+                    ["Boya rasyosu", "×" + r.boyaRasyosu.toFixed(2)],
+                    ["Toplam metre", r.fireDahilMetre.toFixed(0) + " mt"],
+                    ["Klişe+bıçak birim", "€" + r.kliseBicakBirim.toFixed(6)],
+                  ].map(([label, val], i) => (
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "3px 8px", borderRadius: 4, background: i % 2 === 0 ? "#2E2E2E" : "transparent" }}>
+                      <span style={{ color: "#888" }}>{label}</span>
+                      <span style={{ color: "#E8E6DF", fontWeight: 500 }}>{val}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Maliyet */}
+              <div style={{ background: "#242424", border: "1px solid #3A3A3A", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+                <div style={{ fontWeight: 500, fontSize: 13, color: "#D85A30", marginBottom: 10 }}>Maliyet fiyatları</div>
+                <div style={{ display: "grid", gap: 8, fontSize: 12 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 10px", background: "#2E2E2E", borderRadius: 6 }}>
+                    <span style={{ color: "#999" }}>İşçiliksiz birim maliyet</span>
+                    <span><b>€{r.isciliksizEuro.toFixed(6)}</b> <span style={{ color: "#888" }}>/ ₺{r.isciliksizTL.toFixed(6)}</span></span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 10px", background: "#2E2E2E", borderRadius: 6 }}>
+                    <span style={{ color: "#999" }}>İşçilikli birim maliyet</span>
+                    <span><b>€{r.iscilikliEuro.toFixed(6)}</b> <span style={{ color: "#888" }}>/ ₺{r.iscilikliTL.toFixed(6)}</span></span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 10px" }}>
+                    <span style={{ color: "#999" }}>Toplam maliyet (işçiliksiz)</span>
+                    <span><b>€{r.toplamMaliyetEuro.toFixed(2)}</b> <span style={{ color: "#888" }}>/ ₺{r.toplamMaliyetTL.toFixed(2)}</span></span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Satış */}
+              <div style={{ background: "#242424", border: "1px solid #D85A30", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+                <div style={{ fontWeight: 500, fontSize: 13, color: "#D85A30", marginBottom: 10 }}>Satış fiyatları</div>
+                <div style={{ display: "grid", gap: 8, fontSize: 12 }}>
+                  <div style={{ padding: "8px 10px", background: "#2E2E2E", borderRadius: 6 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                      <span style={{ color: "#999" }}>Minimum satış (×{c.satirCarpan})</span>
+                      <span style={{ color: "#1D9E75", fontWeight: 500 }}>Brüt marj: %{(r.brutMarj * 100).toFixed(1)}</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <span style={{ fontSize: 16, fontWeight: 500 }}>€{r.minSatisEuro.toFixed(6)}</span>
+                      <span style={{ color: "#888" }}>₺{r.minSatisTL.toFixed(6)}</span>
+                    </div>
+                  </div>
+                  <div style={{ padding: "8px 10px", background: "#2E2E2E", borderRadius: 6 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                      <span style={{ color: "#999" }}>Pekiyi satış (×{c.satirCarpan2})</span>
+                      <span style={{ color: "#1D9E75", fontWeight: 500 }}>Net marj: %{(r.netMarj * 100).toFixed(1)}</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <span style={{ fontSize: 16, fontWeight: 500 }}>€{r.pekiyiSatisEuro.toFixed(6)}</span>
+                      <span style={{ color: "#888" }}>₺{r.pekiyiSatisTL.toFixed(6)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Genel toplam */}
+              <div style={{ background: "#1A1A1A", border: "1px solid #D85A30", borderRadius: 12, padding: 16, textAlign: "center" }}>
+                <div style={{ fontSize: 11, color: "#999", marginBottom: 6 }}>Toplam minimum satış ({c.qty.toLocaleString("tr-TR")} adet)</div>
+                <div style={{ fontSize: 28, fontWeight: 600, color: "#D85A30" }}>€{r.toplamMinSatisEuro.toFixed(2)}</div>
+                <div style={{ fontSize: 14, color: "#888", marginTop: 4 }}>₺{(r.toplamMinSatisEuro * c.eurRate).toFixed(2)}</div>
+              </div>
+
+              <button onClick={() => {
+                const t = "Etiket: " + c.height + "x" + c.width + "mm (×" + c.yanYana + ")\nKağıt: " + c.paper + "\nMiktar: " + c.qty.toLocaleString("tr-TR") + "\nBirim maliyet: €" + r.isciliksizEuro.toFixed(4) + "\nMin. satış: €" + r.minSatisEuro.toFixed(4) + "\nPekiyi satış: €" + r.pekiyiSatisEuro.toFixed(4) + "\nToplam: €" + r.toplamMinSatisEuro.toFixed(2);
+                navigator.clipboard?.writeText(t); showToast("Kopyalandı");
+              }} style={{ width: "100%", marginTop: 10, padding: "10px", borderRadius: 8, border: "0.5px solid #444", background: "#333", color: "#E8E6DF", cursor: "pointer", fontSize: 13, fontWeight: 500 }}>Kopyala</button>
+            </>) : (
+              <div style={{ background: "#242424", border: "0.5px solid #3A3A3A", borderRadius: 12, padding: 40, textAlign: "center" }}>
+                <div style={{ fontSize: 32, color: "#3A3A3A", marginBottom: 12 }}>€</div>
+                <div style={{ fontSize: 14, color: "#888" }}>Boyut ve miktar girin</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const CustomerFormModal = () => {
     const [form, setForm] = useState(editItem); if (!form) return null; const upd = (k, v) => setForm({ ...form, [k]: v });
-    const fieldRow = { paddingBottom: 14, marginBottom: 14, borderBottom: "1px solid #eee" };
+    const fieldRow = { paddingBottom: 14, marginBottom: 14, borderBottom: "1px solid #3A3A3A" };
     return (
       <Modal open={modal === "customer"} onClose={() => setModal(null)} title={form.id ? "Müşteri düzenle" : "Yeni müşteri"}>
         <div style={fieldRow}><Field label="Firma adı"><input style={inputStyle} value={form.name} onChange={e => upd("name", e.target.value)} /></Field></div>
@@ -1030,8 +1403,8 @@ export default function CRMApp() {
         <div style={fieldRow}><Field label="Telefon"><input style={inputStyle} value={form.phone} onChange={e => upd("phone", e.target.value)} placeholder="+90 5XX XXX XXXX" /></Field></div>
         <div style={fieldRow}><Field label="E-posta"><input style={inputStyle} type="email" value={form.email} onChange={e => upd("email", e.target.value)} /></Field></div>
         <div style={{ paddingBottom: 8 }}><Field label="Notlar"><textarea style={{ ...inputStyle, minHeight: 60, resize: "vertical" }} value={form.notes} onChange={e => upd("notes", e.target.value)} /></Field></div>
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 8, paddingTop: 14, borderTop: "1px solid #eee" }}>
-          <button onClick={() => setModal(null)} style={{ padding: "8px 20px", borderRadius: 8, border: "1px solid #ddd", background: "#fff", cursor: "pointer", fontSize: 13, color: "#333" }}>İptal</button>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 8, paddingTop: 14, borderTop: "1px solid #3A3A3A" }}>
+          <button onClick={() => setModal(null)} style={{ padding: "8px 20px", borderRadius: 8, border: "1px solid #444", background: "#2A2A2A", cursor: "pointer", fontSize: 13, color: "#E8E6DF" }}>İptal</button>
           <button onClick={() => saveCustomer(form)} disabled={!form.name} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: form.name ? "#D85A30" : "#ccc", color: "#fff", cursor: form.name ? "pointer" : "default", fontSize: 13, fontWeight: 500 }}>Kaydet</button>
         </div>
       </Modal>
@@ -1040,7 +1413,7 @@ export default function CRMApp() {
 
   const OrderFormModal = () => {
     const [form, setForm] = useState(editItem); if (!form) return null; const upd = (k, v) => setForm({ ...form, [k]: v }); const valid = form.customerId && form.product && form.qty > 0;
-    const fieldRow = { paddingBottom: 14, marginBottom: 14, borderBottom: "1px solid #eee" };
+    const fieldRow = { paddingBottom: 14, marginBottom: 14, borderBottom: "1px solid #3A3A3A" };
     return (
       <Modal open={modal === "order"} onClose={() => setModal(null)} title={form.id ? "Sipariş düzenle" : "Yeni sipariş"}>
         <div style={fieldRow}><Field label="Müşteri"><select style={inputStyle} value={form.customerId} onChange={e => upd("customerId", e.target.value)}><option value="">Seçin...</option>{data.customers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></Field></div>
@@ -1052,14 +1425,14 @@ export default function CRMApp() {
         <div style={fieldRow}><Field label="Birim satış fiyatı"><input style={inputStyle} type="number" step="0.01" value={form.unitPrice} onChange={e => upd("unitPrice", e.target.value)} /></Field></div>
         <div style={{ paddingBottom: 8 }}><Field label="Birim maliyet"><input style={inputStyle} type="number" step="0.01" value={form.costPrice} onChange={e => upd("costPrice", e.target.value)} /></Field></div>
         {form.qty > 0 && form.unitPrice > 0 && (
-          <div style={{ background: "#f8f8f8", borderRadius: 8, padding: 12, marginTop: 4, marginBottom: 8, fontSize: 13 }}>
+          <div style={{ background: "#333", borderRadius: 8, padding: 12, marginTop: 4, marginBottom: 8, fontSize: 13 }}>
             <div style={{ marginBottom: 6 }}>Toplam: <b>{fmtCurrency(form.qty * form.unitPrice, form.currency)}</b></div>
             <div style={{ marginBottom: 6 }}>Maliyet: <b>{fmtCurrency(form.qty * form.costPrice, form.currency)}</b></div>
             <div>Kar: <b style={{ color: (form.qty * form.unitPrice - form.qty * form.costPrice) > 0 ? "#3B6D11" : "#A32D2D" }}>{fmtCurrency(form.qty * form.unitPrice - form.qty * form.costPrice, form.currency)}</b></div>
           </div>
         )}
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 8, paddingTop: 14, borderTop: "1px solid #eee" }}>
-          <button onClick={() => setModal(null)} style={{ padding: "8px 20px", borderRadius: 8, border: "1px solid #ddd", background: "#fff", cursor: "pointer", fontSize: 13, color: "#333" }}>İptal</button>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 8, paddingTop: 14, borderTop: "1px solid #3A3A3A" }}>
+          <button onClick={() => setModal(null)} style={{ padding: "8px 20px", borderRadius: 8, border: "1px solid #444", background: "#2A2A2A", cursor: "pointer", fontSize: 13, color: "#E8E6DF" }}>İptal</button>
           <button onClick={() => saveOrder(form)} disabled={!valid} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: valid ? "#D85A30" : "#ccc", color: "#fff", cursor: valid ? "pointer" : "default", fontSize: 13, fontWeight: 500 }}>Kaydet</button>
         </div>
       </Modal>
@@ -1067,25 +1440,29 @@ export default function CRMApp() {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", fontFamily: "var(--font-sans)", color: "var(--color-text-primary)", background: "var(--color-background-tertiary)" }}>
-      <div style={{ width: sideOpen ? 200 : 56, transition: "width 0.2s", background: "var(--color-background-primary)", borderRight: "0.5px solid var(--color-border-tertiary)", display: "flex", flexDirection: "column", flexShrink: 0, overflow: "hidden" }}>
-        <div style={{ padding: sideOpen ? "16px 18px" : "16px 12px", borderBottom: "0.5px solid var(--color-border-tertiary)", display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={() => setSideOpen(!sideOpen)}>
-          <img src="data:image/png;base64,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" style={{ width: 36, height: 36, borderRadius: 8, flexShrink: 0, objectFit: "contain" }} alt="Nakapp" />
+    <div style={{ display: "flex", minHeight: "100vh", fontFamily: "var(--font-sans)", color: "#E8E6DF", background: "#1A1A1A",
+      "--nk-bg": "#1A1A1A", "--nk-card": "#242424", "--nk-card2": "#2E2E2E", "--nk-border": "#3A3A3A", "--nk-text": "#E8E6DF", "--nk-text2": "#999"
+    }}>
+      <div style={{ width: sideOpen ? 200 : 56, transition: "width 0.2s", background: "#242424", borderRight: "0.5px solid #3A3A3A", display: "flex", flexDirection: "column", flexShrink: 0, overflow: "hidden" }}>
+        <div style={{ padding: sideOpen ? "16px 18px" : "16px 12px", borderBottom: "0.5px solid #3A3A3A", display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={() => setSideOpen(!sideOpen)}>
+          <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><img src="data:image/png;base64,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" style={{ width: 30, height: 30, borderRadius: 4, objectFit: "contain" }} alt="Nakapp" /></div>
           {sideOpen && <span style={{ fontWeight: 500, fontSize: 17, whiteSpace: "nowrap" }}>Nakapp</span>}
         </div>
         <div style={{ padding: "8px 6px", flex: 1 }}>
           {navItems.map(n => (
             <div key={n.key} onClick={() => setPage(n.key)} style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
+              display: "flex", alignItems: "center", gap: 8,
               padding: sideOpen ? "10px 14px" : "8px 6px", borderRadius: 8, cursor: "pointer", marginBottom: 4,
               background: page === n.key ? "#D85A30" : "transparent",
               color: page === n.key ? "#fff" : "var(--color-text-primary)",
               fontWeight: 500, fontSize: 13,
-              border: page === n.key ? "none" : "0.5px solid var(--color-border-tertiary)"
+              border: page === n.key ? "none" : "0.5px solid var(--color-border-tertiary)",
+              justifyContent: sideOpen ? "flex-start" : "center"
             }}>
-              <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{sideOpen ? n.label : n.label.slice(0, 2)}</span>
-              {n.key === "reminders" && overdueCustomers.length > 0 && <span style={{ background: page === n.key ? "rgba(255,255,255,0.3)" : "#534AB7", color: "#fff", fontSize: 10, fontWeight: 500, padding: "1px 6px", borderRadius: 10, minWidth: 16, textAlign: "center" }}>{overdueCustomers.length}</span>}
-              {n.key === "collections" && pendingCollections.length > 0 && <span style={{ background: page === n.key ? "rgba(255,255,255,0.3)" : "#534AB7", color: "#fff", fontSize: 10, fontWeight: 500, padding: "1px 6px", borderRadius: 10, minWidth: 16, textAlign: "center" }}>{pendingCollections.length}</span>}
+              <span style={{ flexShrink: 0, display: "flex", alignItems: "center" }}><NavIcon name={n.key} color={page === n.key ? "#fff" : "#888"} /></span>
+              {sideOpen && <span style={{ flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{n.label}</span>}
+              {sideOpen && n.key === "reminders" && overdueCustomers.length > 0 && <span style={{ background: page === n.key ? "rgba(255,255,255,0.3)" : "#534AB7", color: "#fff", fontSize: 10, fontWeight: 500, padding: "1px 6px", borderRadius: 10, minWidth: 16, textAlign: "center" }}>{overdueCustomers.length}</span>}
+              {sideOpen && n.key === "collections" && pendingCollections.length > 0 && <span style={{ background: page === n.key ? "rgba(255,255,255,0.3)" : "#534AB7", color: "#fff", fontSize: 10, fontWeight: 500, padding: "1px 6px", borderRadius: 10, minWidth: 16, textAlign: "center" }}>{pendingCollections.length}</span>}
             </div>
           ))}
         </div>
@@ -1099,6 +1476,7 @@ export default function CRMApp() {
         {page === "drive" && renderDrive()}
         {page === "reminders" && renderReminders()}
         {page === "import" && renderImport()}
+        {page === "calculator" && renderCalculator()}
       </div>
       <CustomerFormModal />
       <OrderFormModal />
